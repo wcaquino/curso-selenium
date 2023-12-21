@@ -6,7 +6,7 @@ import br.ce.wcaquino.core.DriverFactory;
 public class LoginPage extends BasePage {
 	
 	public void acessarTelaInicial(){
-		DriverFactory.getDriver().get("http://srbarriga.herokuapp.com");
+		DriverFactory.getDriver().get("https://seubarriga.wcaquino.me");
 	}
 	
 	public void setEmail(String email) {

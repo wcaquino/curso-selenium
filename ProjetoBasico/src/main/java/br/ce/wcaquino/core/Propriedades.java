@@ -4,9 +4,9 @@ public class Propriedades {
 	
 	public static boolean FECHAR_BROWSER = true;
 	
-	public static Browsers BROWSER = Browsers.IE;
+	public static Browsers BROWSER = Browsers.CHROME;
 	
-	public static TipoExecucao TIPO_EXECUCAO = TipoExecucao.NUVEM;
+	public static TipoExecucao TIPO_EXECUCAO = TipoExecucao.LOCAL;
 	
 	public enum Browsers {
 		CHROME,
