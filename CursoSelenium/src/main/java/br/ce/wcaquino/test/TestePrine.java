@@ -27,16 +27,16 @@ public class TestePrine {
 	@Test
 	public void deveInteragirComRadioPrime(){
 		getDriver().get("https://www.primefaces.org/showcase/ui/input/oneRadio.xhtml");
-		dsl.clicarRadio(By.xpath("//input[@id='j_idt86:console:0']/../..//span"));
-		Assert.assertTrue(dsl.isRadioMarcado("j_idt86:console:0"));
-		dsl.clicarRadio(By.xpath("//label[.='PS4']/..//span"));
-		Assert.assertTrue(dsl.isRadioMarcado("j_idt86:console:1"));
+		dsl.clicarRadio(By.xpath("//input[@id='j_idt287:line:1']/../..//span"));
+		Assert.assertTrue(dsl.isRadioMarcado("j_idt287:line:1"));
+		dsl.clicarRadio(By.xpath("//label[.='Option3']/..//span"));
+		Assert.assertTrue(dsl.isRadioMarcado("j_idt287:line:2"));
 	}
 	
 	@Test
 	public void deveInteragirComSelectPrime(){
 		getDriver().get("https://www.primefaces.org/showcase/ui/input/oneMenu.xhtml");
-		dsl.selecionarComboPrime("j_idt86:console", "Xbox One");
-		Assert.assertEquals("Xbox One", dsl.obterTexto("j_idt86:console_label"));
+		dsl.selecionarComboPrime("j_idt286:option", "Option2");
+		Assert.assertEquals("Option2", dsl.obterTexto("j_idt286:option_label"));
 	}
 }

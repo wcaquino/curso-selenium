@@ -1,6 +1,8 @@
 package br.ce.wcaquino.test;
 import static br.ce.wcaquino.core.DriverFactory.getDriver;
 
+import java.time.Duration;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -29,11 +31,10 @@ public class TesteAjax {
 
 	@Test
 	public void testAjax(){
-		dsl.escrever("j_idt85:name", "Teste");
-		dsl.clicarBotao("j_idt85:j_idt88");
-		WebDriverWait wait = new WebDriverWait(getDriver(), 30);
-//		wait.until(ExpectedConditions.textToBe(By.id("j_idt85:display"), "Teste"));
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("j_idt98")));
-		Assert.assertEquals("Teste", dsl.obterTexto("j_idt85:display"));
+		dsl.escrever("j_idt286:name", "Teste");
+		dsl.clicarBotao("j_idt286:j_idt290");
+		WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(30));
+		wait.until(ExpectedConditions.textToBe(By.id("j_idt286:display"), "Teste"));
+		Assert.assertEquals("Teste", dsl.obterTexto("j_idt286:display"));
 	}
 }

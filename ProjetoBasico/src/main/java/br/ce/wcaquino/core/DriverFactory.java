@@ -2,12 +2,17 @@ package br.ce.wcaquino.core;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.AbstractDriverOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import br.ce.wcaquino.core.Propriedades.TipoExecucao;
@@ -28,6 +33,7 @@ public class DriverFactory {
 		return threadDriver.get();
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public static WebDriver initDriver(){
 		WebDriver driver = null;
 		if(Propriedades.TIPO_EXECUCAO == TipoExecucao.LOCAL) {
@@ -37,30 +43,36 @@ public class DriverFactory {
 			}
 		}
 		if(Propriedades.TIPO_EXECUCAO == TipoExecucao.GRID) {
-			DesiredCapabilities cap = null;
+			AbstractDriverOptions cap = null;
 			switch (Propriedades.BROWSER) {
-				case FIREFOX: cap = DesiredCapabilities.firefox(); break;
-				case CHROME: cap = DesiredCapabilities.chrome(); break;
+				case FIREFOX: cap = new FirefoxOptions(); break;
+				case CHROME: cap = new ChromeOptions(); break;
 			}
 			try {
-				driver = new RemoteWebDriver(new URL("http://192.168.0.184:4444/wd/hub"), cap);
+				driver = new RemoteWebDriver(new URL("http://10.0.0.92:4444/wd/hub"), cap);
 			} catch (MalformedURLException e) {
 				System.err.println("Falha na conexão com o GRID");
 				e.printStackTrace();
 			}
 		}
 		if(Propriedades.TIPO_EXECUCAO == TipoExecucao.NUVEM) {
-			DesiredCapabilities cap = null;
+			AbstractDriverOptions cap = null;
 			switch (Propriedades.BROWSER) {
-				case FIREFOX: cap = DesiredCapabilities.firefox(); break;
-				case CHROME: cap = DesiredCapabilities.chrome(); break;
-				case IE: cap = DesiredCapabilities.internetExplorer();
-						cap.setCapability("platform", "Windows 7");
-						cap.setCapability("version", "11.0"); 
-					break;
+				case FIREFOX: cap = new FirefoxOptions(); break;
+				case CHROME: cap = new ChromeOptions(); break;
+				case IE: cap = new EdgeOptions(); break;
 			}
+			cap.setPlatformName("Windows 11");
+			cap.setBrowserVersion("latest");
+			Map<String, Object> sauceOptions = new HashMap<>();
+			sauceOptions.put("username", "SEU_USERNAME_AQUI");
+			sauceOptions.put("accessKey", "SUA_CREDENCIAL_AQUI");
+			sauceOptions.put("build", "selenium-build-Y2D7A2");
+			sauceOptions.put("name", "Suite #1234");
+			cap.setCapability("sauce:options", sauceOptions);
 			try {
-				driver = new RemoteWebDriver(new URL("http://wcaquino5:172fcd87-6b7d-4c8d-8693-e20c903affa4@ondemand.saucelabs.com:80/wd/hub"), cap);
+				URL url = new URL("https://ondemand.us-west-1.saucelabs.com:443/wd/hub");
+				driver = new RemoteWebDriver(url, cap);
 			} catch (MalformedURLException e) {
 				System.err.println("Falha na conexão com a Saucelabs");
 				e.printStackTrace();

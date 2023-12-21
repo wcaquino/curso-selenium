@@ -1,7 +1,7 @@
 package br.ce.wcaquino.test;
 import static br.ce.wcaquino.core.DriverFactory.getDriver;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 import org.junit.After;
 import org.junit.Before;
@@ -37,17 +37,17 @@ public class TesteSincronismo {
 	
 	@Test
 	public void deveUtilizarEsperaImplicita() throws InterruptedException{
-		getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 		dsl.clicarBotao("buttonDelay");
 		dsl.escrever("novoCampo", "Deu certo?");
-		getDriver().manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+		getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
 	}
 	
 
 	@Test
 	public void deveUtilizarEsperaExplicita() throws InterruptedException{
 		dsl.clicarBotao("buttonDelay");
-		WebDriverWait wait = new WebDriverWait(getDriver(), 30);
+		WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(30));
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("novoCampo")));
 		dsl.escrever("novoCampo", "Deu certo?");
 	}
